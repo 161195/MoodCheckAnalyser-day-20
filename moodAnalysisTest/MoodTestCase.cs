@@ -3,7 +3,6 @@ using MoodCheckProgram20;
 
 namespace moodAnalysisTest
 {
-
     [TestClass]
     public class MoodTestCase
     {
@@ -14,14 +13,44 @@ namespace moodAnalysisTest
 
             //Arrange
             string message = null;
-            string expected = "Happy";
+            string expected = "Message Should Not Be Null";
+            string actual = null;
 
-            //Act
-            moodAnalysis analyser = new moodAnalysis(message);
-            string actual = analyser.AnalyseMood();
+            try
+            {
+                //Act
+                moodAnalysis analyser = new moodAnalysis(message);
+                actual = analyser.AnalyseMood();
+            }
+            catch (MoodAnalyserCustomException ex)
+            {
+                //Assert
+                Assert.AreEqual(expected, ex.Message);
+            }
 
-            //Assert
-            Assert.AreEqual(expected, actual);
+
+        }
+
+        [TestMethod]
+        public void getCustomNullException()
+        {
+            //Arrange
+            string expected = "Message Should Not Be Null";
+            moodAnalysis modeAnalyzer = new moodAnalysis(null);
+
+            try
+            {
+                //Act
+                string actual = modeAnalyzer.AnalyseMood();
+
+            }
+            catch (MoodAnalyserCustomException ex)
+            {
+
+                //Assert
+                Assert.AreEqual(expected, ex.Message);
+            }
+
         }
     }
 }

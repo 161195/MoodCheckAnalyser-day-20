@@ -27,10 +27,12 @@ namespace MoodCheckProgram20
             }
             catch (NullReferenceException ex)
             {
-                Console.WriteLine("Null Message Provided");
-                return "Happy";
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NUll_Type_Exception, "Message Should Not Be Null");
+                //return "Happy";
             }
 
         }
+
     }
+    
 }
