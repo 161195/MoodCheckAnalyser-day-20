@@ -27,7 +27,7 @@ namespace MoodCheckProgram20
             }
             catch (NullReferenceException ex)
             {
-                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NUll_Type_Exception, "Message Should Not Be Null");
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.Empty_Type_Exception, "Message Should Not Be Empty");
                 //return "Happy";
             }
 
