@@ -4,29 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MoodCheckProgram20
+namespace MoodAnalyser01_Core
 {
-    public class MoodAnalyserCustomException : Exception
+    /// <summary>
+    /// Mood analysis class for handling exceptions
+    /// </summary>
+    /// <seealso cref="System.Exception" />
+    public class CustomMoodAnException: Exception
     {
-        public ExceptionType type;
+        /// <summary>
+        /// enum for exception type
+        /// enums are like constant values which are numeric integer numbers which either the user assigns or default starting fro  0,1,2...
+        /// </summary>
 
-        //An enum (or enumeration type) is used to assign constant names to a group of numeric integer values.
+        public ExceptionType type;
         public enum ExceptionType
         {
-            NUll_Type_Exception,
-            Empty_Type_Exception,
-            Class_Not_Found,
-            NO_SUCH_CLASS,
-            NO_SUCH_METHOD,
-            EMPTY_MESSAGE, 
-            NULL_VALUE, 
-            NO_SUCH_FIELD, 
-            OBJECT_CREATION_ISSUE
+            NULL_VALUE, EMPTY_MESSAGE, NO_SUCH_FIELD, NO_SUCH_METHOD,
+            NO_SUCH_CLASS, OBJECT_CREATION_ISSUE
 
         }
-        public MoodAnalyserCustomException(ExceptionType type, string message) : base(message)
+
+        public CustomMoodAnException(ExceptionType type, string message): base(message)
         {
             this.type = type;
         }
+
     }
 }
+
