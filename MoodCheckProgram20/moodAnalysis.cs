@@ -8,31 +8,43 @@ namespace MoodCheckProgram20
 {
     public class moodAnalysis
     {
-        public string message;
+        private string message;        //the private message field of the mood analyser class
 
-        public moodAnalysis(string message)
+        public moodAnalysis(string message)        //initialising the parameterised constructor
         {
             this.message = message;
         }
-        public string AnalyseMood()
+
+        public moodAnalysis()                //initialising the default constructor
         {
-            try
+            this.message = null;
+        }
+
+        public string AnalyseMood()                  //declaring the analyse mood method
+        {
+            try                                      //the try and catch block is for exception handling
             {
-                if (message.ToLower().Contains("sad"))
+                //this is the custom exception that we declared for checking empty messages. exception type is an enum followed by the message.
+                if (this.message.Equals(string.Empty))
+                {
+                    throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.EMPTY_MESSAGE, "Mood should not be Empty");
+                }
+
+                if (this.message.ToLower().Contains("sad"))
                 {
                     return "SAD";
                 }
                 else
+                {
                     return "HAPPY";
+                }
             }
-            catch (NullReferenceException ex)
+
+            catch (NullReferenceException)                  //this shows that it should not be null. NullREferenceException is a predefined exception class
             {
-                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.Empty_Type_Exception, "Message Should Not Be Empty");
-                //return "Happy";
+                throw new MoodAnalyserCustomException(MoodAnalyserCustomException.ExceptionType.NULL_VALUE, "Mood can not be null");
             }
-
         }
-
     }
-    
+
 }
