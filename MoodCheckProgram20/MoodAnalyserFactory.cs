@@ -7,11 +7,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace MoodAnalyser01_Core
-{/// <summary>
- /// Mood analyser factory class
- /// this contains data about all the reflection methods,exceptions and other things that we are handling
- /// </summary>
-    public class MoodAnalyserFactory
+{
+    /// <summary>
+    /// Mood analyser reflector class
+    /// this conatains data about all the reflection methods,exceptions and other things that we are handling
+    /// </summary>
+    public class MoodAnalyserReflector
     {
         /// <summary>
         /// Creates the mood analyse.
@@ -52,7 +53,7 @@ namespace MoodAnalyser01_Core
                 throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.NO_SUCH_METHOD, "Constructor not found");
             }
         }
-        ///following is for parameterised constrctor as per uc-5        
+        ///following is for parameterised constrctor as per UC-5        
         /// <summary>
         /// Creates the mood analyser parameterised constructor.
         /// </summary>
@@ -64,7 +65,7 @@ namespace MoodAnalyser01_Core
         /// or
         /// Class not found
         /// </exception>
-        public static object CreateMoodAnalyserParameterisedConstructor(string className, string constrcutorName)
+        public static object CreateMoodAnalyserParameterisedConstructor(string className, string constrcutorName, string message)
         {
             Type type = typeof(MoodAnalyser);
             if (type.Name.Equals(className) || type.FullName.Equals(className))
@@ -72,7 +73,7 @@ namespace MoodAnalyser01_Core
                 if (type.Name.Equals(constrcutorName))
                 {
                     ConstructorInfo ctor = type.GetConstructor(new[] { typeof(string) });
-                    object instance = ctor.Invoke(new object[] { "HAPPY" });
+                    object instance = ctor.Invoke(new object[] { message });
                     return instance;
                 }
                 else
@@ -86,5 +87,50 @@ namespace MoodAnalyser01_Core
                 throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.NO_SUCH_CLASS, "Class not found");
             }
         }
+        /// <summary>
+        /// Invokes the analyse mood.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="methodName">Name of the method.</param>
+        /// <returns></returns>
+        /// <exception cref="MoodAnalyser01_Core.CustomMoodAnException">method not found</exception>
+        /// this is as per UC6
+        public static string InvokeAnalyseMood(string message, string methodName)
+        {
+            try
+            {
+                Type type = typeof(MoodAnalyser);
+                MethodInfo methodInfo = type.GetMethod(methodName);
+                object moodAnalyserObject = MoodAnalyserReflector.CreateMoodAnalyserParameterisedConstructor("MoodAnalyser01_Core.MoodAnalyser", "MoodAnalyser", message);
+                object info = methodInfo.Invoke(moodAnalyserObject, null);
+                return info.ToString();
+            }
+
+            catch (NullReferenceException)
+            {
+                throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.NULL_VALUE, "method not found");
+            }
+        }
+
+        //    public static string Setfield(string message, string fieldName)
+        //    {
+        //        try
+        //        {
+        //            MoodAnalyser moodAnalyse = new MoodAnalyser();
+        //            Type type = typeof(MoodAnalyser);
+        //            FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+        //            if (message == null)
+        //            {
+        //                throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.EMPTY_MESSAGE, "Message should not be null");
+        //            }
+        //            field.SetValue(moodAnalyse, message);
+        //            return moodAnalyse.message;
+        //        }
+
+        //        catch (NullReferenceException)
+        //        {
+        //            throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.NO_SUCH_FIELD, "Field should not be null");
+        //        }
+        //    }
     }
 }

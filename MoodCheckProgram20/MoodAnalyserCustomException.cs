@@ -10,7 +10,7 @@ namespace MoodAnalyser01_Core
     /// Mood analysis class for handling exceptions
     /// </summary>
     /// <seealso cref="System.Exception" />
-    public class CustomMoodAnException: Exception
+    public class CustomMoodAnException : Exception
     {
         /// <summary>
         /// enum for exception type
@@ -25,11 +25,10 @@ namespace MoodAnalyser01_Core
 
         }
 
-        public CustomMoodAnException(ExceptionType type, string message): base(message)
+        public CustomMoodAnException(ExceptionType type, string message) : base(message)
         {
             this.type = type;
         }
 
     }
 }
-
