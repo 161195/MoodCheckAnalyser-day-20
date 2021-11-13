@@ -111,26 +111,41 @@ namespace MoodAnalyser01_Core
                 throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.NULL_VALUE, "method not found");
             }
         }
+        /// <summary>
+        /// Setfields the specified message.
+        /// </summary>
+        /// <param name="message">The message.</param>
+        /// <param name="fieldName">Name of the field.</param>
+        /// <returns></returns>
+        /// <exception cref="MoodAnalyser01_Core.CustomMoodAnException">
+        /// Message should not be null
+        /// or
+        /// Field not found
+        /// </exception>
+        /// This is UC 7 of Dynamically changing mood
+        public static string Setfield(string message, string fieldName)
+        {
+            try
+            {
+                MoodAnalyser moodAnalyse = new MoodAnalyser();
+                Type type = typeof(MoodAnalyser);
+                FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
+                if (message == null)
+                {
+                    throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.EMPTY_MESSAGE, "Message should not be null");
+                }
+                field.SetValue(moodAnalyse, message);
+                return moodAnalyse.message;
+            }
 
-        //    public static string Setfield(string message, string fieldName)
-        //    {
-        //        try
-        //        {
-        //            MoodAnalyser moodAnalyse = new MoodAnalyser();
-        //            Type type = typeof(MoodAnalyser);
-        //            FieldInfo field = type.GetField(fieldName, BindingFlags.Public | BindingFlags.Instance);
-        //            if (message == null)
-        //            {
-        //                throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.EMPTY_MESSAGE, "Message should not be null");
-        //            }
-        //            field.SetValue(moodAnalyse, message);
-        //            return moodAnalyse.message;
-        //        }
+            catch (NullReferenceException)
+            {
+                throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.NO_SUCH_FIELD, "Field not found");
+            }
 
-        //        catch (NullReferenceException)
-        //        {
-        //            throw new CustomMoodAnException(CustomMoodAnException.ExceptionType.NO_SUCH_FIELD, "Field should not be null");
-        //        }
-        //    }
+        }
+
     }
+       
 }
+
